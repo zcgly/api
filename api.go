@@ -3,15 +3,9 @@ package api
 import (
 	"encoding/json"
 	"github.com/kataras/iris/v12/context"
+	"github.com/zcgly/api/models"
 	"golang.org/x/exp/maps"
 )
-
-type Response struct {
-	Success bool   `json:"success"`
-	Msg     string `json:"msg,omitempty"`
-	Data    any    `json:"data"`
-	Code    int    `json:"code"`
-}
 
 func WriteString(ctx *context.Context, data string) {
 	_, err := ctx.WriteString(data)
@@ -19,17 +13,17 @@ func WriteString(ctx *context.Context, data string) {
 }
 
 func WriteData(ctx *context.Context, data any) {
-	resp := &Response{Success: true, Code: 200, Data: data}
+	resp := &models.ApiResponse{Success: true, Code: 200, Data: data}
 	checkErr(ctx.JSON(resp))
 }
 
 func WriteOK(ctx *context.Context) {
-	resp := &Response{Success: true, Code: 200}
+	resp := &models.ApiResponse{Success: true, Code: 200}
 	checkErr(ctx.JSON(resp))
 }
 
 func WriteFailed(ctx *context.Context, data any) {
-	resp := &Response{Success: false, Code: 400, Data: data}
+	resp := &models.ApiResponse{Success: false, Code: 400, Data: data}
 	checkErr(ctx.JSON(resp))
 }
 
